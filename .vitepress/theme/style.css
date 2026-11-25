@@ -1,0 +1,172 @@
+:root {
+  --vp-layout-max-width: 100vw;
+}
+
+.Layout.knowledge-map .VPDoc .content-container {
+  max-width: none;
+}
+
+.map-heading {
+  margin-bottom: 24px;
+}
+
+.map-heading h1 {
+  margin: 0 0 8px;
+  font-size: clamp(24px, 3vw, 32px);
+  font-weight: 650;
+  line-height: 1.3;
+  letter-spacing: -0.025em;
+}
+
+.map-heading p {
+  margin: 8px 0;
+  color: var(--vp-c-text-2);
+}
+
+.map-heading .map-help {
+  font-size: 13px;
+}
+
+.vp-doc .mermaid {
+  margin: 0;
+  background: var(--vp-c-bg);
+  border-radius: 12px;
+  box-shadow: none;
+  padding: 24px;
+}
+
+/* Keep the same restrained palette in the document and fullscreen clone. */
+.mermaid,
+.mermaid-view-content {
+  --map-node-bg: #f6f7f8;
+  --map-group-bg: #fcfcfd;
+  --map-border: #dfe1e5;
+  --map-line: #8b9099;
+  --map-text: #30343b;
+}
+
+.dark .mermaid,
+.dark .mermaid-view-content {
+  --map-node-bg: #272a30;
+  --map-group-bg: #1e2025;
+  --map-border: #42464f;
+  --map-line: #989da7;
+  --map-text: #e4e6eb;
+}
+
+:is(.mermaid, .mermaid-view-content) svg .node :is(rect, circle, ellipse, polygon, path) {
+  fill: var(--map-node-bg) !important;
+  stroke: var(--map-border) !important;
+  stroke-width: 1px !important;
+  filter: none !important;
+}
+
+:is(.mermaid, .mermaid-view-content) svg .node rect {
+  rx: 5px;
+  ry: 5px;
+}
+
+:is(.mermaid, .mermaid-view-content) svg .cluster rect {
+  fill: var(--map-group-bg) !important;
+  stroke: var(--map-border) !important;
+  stroke-width: 1px !important;
+  filter: none !important;
+  rx: 6px;
+  ry: 6px;
+}
+
+:is(.mermaid, .mermaid-view-content) svg :is(.nodeLabel, .edgeLabel, .cluster-label, .label) {
+  color: var(--map-text) !important;
+}
+
+:is(.mermaid, .mermaid-view-content) svg text {
+  fill: var(--map-text) !important;
+}
+
+:is(.mermaid, .mermaid-view-content) svg .flowchart-link {
+  stroke: var(--map-line) !important;
+  stroke-width: 1px !important;
+}
+
+:is(.mermaid, .mermaid-view-content) svg marker path {
+  fill: var(--map-line) !important;
+  stroke: var(--map-line) !important;
+}
+
+:is(.mermaid, .mermaid-view-content) svg :is(.edgeLabel, .edgeLabel p, .labelBkg) {
+  background: var(--vp-c-bg) !important;
+}
+
+.vp-doc .mermaid svg p {
+  /* Match Mermaid's label measurement, outside VitePress's prose styles. */
+  line-height: 1.5;
+}
+
+.vp-doc .mermaid svg {
+  width: 100%;
+  height: auto;
+  max-height: 70vh;
+  max-height: 70dvh;
+}
+
+/* Keep the controls outside the diagram's fitted area, including on touch devices. */
+dialog.mermaid-view-overlay {
+  height: 100dvh;
+}
+
+.mermaid-view-content {
+  position: absolute;
+  inset: 0 0 88px;
+  margin: 0;
+  height: auto;
+  border: 0;
+}
+
+.mermaid-view-content svg {
+  max-width: 96vw;
+  max-height: calc(100vh - 112px);
+  max-height: calc(100dvh - 112px);
+}
+
+.mermaid-view-controls {
+  top: auto;
+  right: auto;
+  bottom: max(12px, env(safe-area-inset-bottom));
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  max-width: calc(100vw - 16px);
+  background: var(--vp-c-bg-soft);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgb(0 0 0 / 6%);
+}
+
+.mermaid-view-btn,
+.mermaid-view-scale {
+  background: var(--vp-c-bg);
+  border-radius: 7px;
+}
+
+.vp-doc .mermaid:hover {
+  border-color: var(--vp-c-text-3);
+  box-shadow: none;
+}
+
+.mermaid-view-scale {
+  min-width: 64px;
+}
+
+@media (max-width: 360px) {
+  .mermaid-view-controls {
+    gap: 4px;
+    padding: 6px;
+  }
+}
+
+@media (min-width: 960px) {
+  .knowledge-map .VPDoc:not(.has-aside) .content {
+    max-width: none;
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "sap-knowledge-map",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=24.0.0" },
+  "scripts": {
+    "docs:dev": "vitepress dev .",
+    "docs:build": "vitepress build .",
+    "docs:preview": "vitepress preview .",
+    "test": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.65.1",
+    "mermaid": "12.3.0",
+    "vitepress": "1.6.4",
+    "vitepress-mermaid-viewer": "0.5.2",
+    "vue": "3.5.46"
+  }
+}
