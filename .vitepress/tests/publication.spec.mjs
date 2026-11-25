@@ -20,8 +20,9 @@ test('home introduces four maps and exposes only the six learning pages', async 
   }
   await expect(main).not.toContainText('로컬 실행')
   await expect(main).not.toContainText('GUIDELINES')
-  const links = page.locator('.VPSidebar a[href]')
+  const links = page.locator('.VPSidebar .VPSidebarItem a[href]')
   await expect(links).toHaveCount(6)
+  await expect(links).toHaveText(['01. Comprehensive Map', '02. DDIC Map', '03. ABAP Program Map', '04. Open SQL Map', '퀴즈', '정답 및 해설'])
   const mentoring = page.locator('.VPSidebar .VPSidebarItem.level-1').filter({ hasText: '멘토링 1주차' })
   await expect(mentoring).toHaveCount(1)
   await expect(mentoring.locator('a[href]')).toHaveText(['퀴즈', '정답 및 해설'])

@@ -15,7 +15,28 @@ const config = withMermaid(defineConfig({
   // GitHub Pages serves real .html files without a rewrite server.
   cleanUrls: false,
   srcExclude: ['node_modules/**', 'test-results/**', 'playwright-report/**', '**/AGENTS.md', 'readme.md', 'README.md', 'GUIDELINES.md'],
-  markdown: { languages: ['abap'] },
+  // Preserve previously shared URLs while organizing the Markdown sources.
+  rewrites: {
+    'maps/:page': ':page',
+    'mentoring/first-week/:page': 'fisrt week/:page'
+  },
+  markdown: {
+    languages: ['abap'],
+    config(md) {
+      // Keep Markdown links valid in GitHub/Obsidian, but target the stable web URLs.
+      md.core.ruler.after('inline', 'public-content-links', state => {
+        for (const block of state.tokens) {
+          for (const token of block.children || []) {
+            if (token.type !== 'link_open') continue
+            const href = token.attrGet('href')
+            if (href) token.attrSet('href', href
+              .replace(/^\.\/maps\//, './')
+              .replace(/^\.\/mentoring\/first-week\//, './fisrt%20week/'))
+          }
+        }
+      })
+    }
+  },
   mermaid: {
     securityLevel: 'strict',
     startOnLoad: false,
@@ -33,11 +54,11 @@ const config = withMermaid(defineConfig({
   },
   transformPageData(pageData) {
     const learningTitle = {
-      'fisrt week/problem.md': '멘토링 1주차 퀴즈',
-      'fisrt week/solution.md': '정답 및 해설'
-    }[pageData.relativePath]
+      'mentoring/first-week/problem.md': '멘토링 1주차 퀴즈',
+      'mentoring/first-week/solution.md': '정답 및 해설'
+    }[pageData.filePath]
     if (learningTitle) pageData.title = learningTitle
-    const map = maps.find(map => map.file === pageData.relativePath)
+    const map = maps.find(map => map.file === pageData.filePath)
     if (map) {
       pageData.title = map.title
       pageData.description = map.description
@@ -51,7 +72,7 @@ const config = withMermaid(defineConfig({
   themeConfig: {
     nav: [{ text: '홈', link: '/' }],
     sidebar: [
-      { text: 'Knowledge Maps', items: maps.map(map => ({ text: map.title, link: `/${map.file.replace(/\.md$/, '')}` })) },
+      { text: 'Knowledge Maps', items: maps.map((map, index) => ({ text: `${String(index + 1).padStart(2, '0')}. ${map.title}`, link: `/${map.file.replace(/^maps\//, '').replace(/\.md$/, '')}` })) },
       { text: '학습 자료', items: [
         { text: '멘토링 1주차', collapsed: false, items: [
           { text: '퀴즈', link: '/fisrt week/problem' },

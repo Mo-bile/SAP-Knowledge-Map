@@ -1,13 +1,13 @@
 import { test, expect } from '@playwright/test'
 
 const maps = [
-  ['01.comprehensive%20map.html', 'Comprehensive Map', 'SAPUI5'],
-  ['02.DDIC.html', 'DDIC Map', 'Domain'],
-  ['03.ABAP%20program.html', 'ABAP Program Map', 'Internal Table'],
-  ['04.Open%20SQL.html', 'Open SQL Map', 'Table Buffer']
+  ['01.comprehensive%20map.html', 'Comprehensive Map', 'SAPUI5', '01. Comprehensive Map'],
+  ['02.DDIC.html', 'DDIC Map', 'Domain', '02. DDIC Map'],
+  ['03.ABAP%20program.html', 'ABAP Program Map', 'Internal Table', '03. ABAP Program Map'],
+  ['04.Open%20SQL.html', 'Open SQL Map', 'Table Buffer', '04. Open SQL Map']
 ]
 
-for (const [url, title, label] of maps) {
+for (const [url, title, label, sidebarName] of maps) {
   test(`${title}: direct URL renders original graph and viewer controls work`, async ({ page }) => {
     const errors = []
     page.on('pageerror', error => errors.push(error.message))
@@ -18,6 +18,8 @@ for (const [url, title, label] of maps) {
     expect(response.status()).toBe(200)
     await expect(page).toHaveTitle(new RegExp(title))
     await expect(page.getByRole('heading', { name: title, exact: true })).toBeVisible()
+    // Source folders may change; shared URLs and their active navigation stay stable.
+    await expect(page.locator('.VPSidebarItem.is-active').getByRole('link', { name: sidebarName, exact: true, includeHidden: true })).toHaveCount(1)
     const diagram = page.getByRole('button', { name: 'Open diagram in fullscreen viewer' })
     await expect(diagram.locator('svg')).toBeVisible()
     await expect(diagram).toContainText(label)
@@ -158,7 +160,7 @@ test('home links, sidebar navigation and dark theme keep graphs usable', async (
     await page.locator('.VPNavBarAppearance').getByRole('switch').click()
     await expect(page.locator('html')).toHaveClass(/dark/)
     await expect.poll(async () => page.locator('.mermaid svg .node rect').first().evaluate(node => getComputedStyle(node).fill)).not.toBe(lightFill)
-    await page.locator('.VPSidebar').getByRole('link', { name: 'DDIC Map', exact: true }).click()
+    await page.locator('.VPSidebar').getByRole('link', { name: '02. DDIC Map', exact: true }).click()
     await expect(page).toHaveURL(/02\.DDIC\.html$/)
     await expect(page.locator('.mermaid svg')).toBeVisible()
   }

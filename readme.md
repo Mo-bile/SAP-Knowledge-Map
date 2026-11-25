@@ -6,11 +6,11 @@ SAP의 개별 문법이나 기능을 파편적으로 암기하지 않고, 전체
 
 | 문서 | 의도 및 다루는 범위 |
 | :--- | :--- |
-| **[01.comprehensive map.md](./01.comprehensive%20map.md)** | **전체 아키텍처 지도.** 프론트엔드(UI5/Fiori, SAP GUI), 백엔드 로직(ABAP/RAP), 데이터 계층(DDIC/DB)이 어떤 책임으로 나뉘고 서로 어떻게 연결되는지 최상위 큰 그림을 잡기 위한 문서입니다. |
-| **[02.DDIC.md](./02.DDIC.md)** | **데이터 설계도와 규칙.** 시스템 전역에서 재사용되는 데이터 틀(Domain, Data Element, Structure, Table, Table Type)과 뷰·유지보수 구조(Maintenance View, TMG, View Cluster)가 왜 분리되어 설계되었는지 정리한 문서입니다. |
-| **[03.ABAP program.md](./03.ABAP%20program.md)** | **실행 로직과 메모리 흐름.** 설계도(`Data Types`)를 참조해 실제 런타임 메모리 객체(`Data Objects`: Work Area, Internal Table)를 생성하고, 내부 메모리에서의 보관·가공 협력과 디버깅 흐름을 정리한 문서입니다. |
-| **[04.Open SQL.md](./04.Open%20SQL.md)** | **DB 접근 계층 (Open SQL).** ABAP 프로그램의 데이터 요청이 `Database Interface`와 `Table Buffer`를 거쳐 DB와 협력하고 프로그램 메모리(WA/ITAB)로 적재되는 파이프라인을 정리한 문서입니다. |
-| **[fisrt week/problem.md](./fisrt%20week/problem.md)** | **개념 검증 및 실습 문제.** 맵으로 정리한 계층·참조·메모리 동작을 실제 코드와 시나리오에 적용해 보며, '안다는 착각'과 오개념을 점검하기 위한 문서입니다. |
+| **[01.comprehensive map.md](./maps/01.comprehensive%20map.md)** | **전체 아키텍처 지도.** 프론트엔드(UI5/Fiori, SAP GUI), 백엔드 로직(ABAP/RAP), 데이터 계층(DDIC/DB)이 어떤 책임으로 나뉘고 서로 어떻게 연결되는지 최상위 큰 그림을 잡기 위한 문서입니다. |
+| **[02.DDIC.md](./maps/02.DDIC.md)** | **데이터 설계도와 규칙.** 시스템 전역에서 재사용되는 데이터 틀(Domain, Data Element, Structure, Table, Table Type)과 뷰·유지보수 구조(Maintenance View, TMG, View Cluster)가 왜 분리되어 설계되었는지 정리한 문서입니다. |
+| **[03.ABAP program.md](./maps/03.ABAP%20program.md)** | **실행 로직과 메모리 흐름.** 설계도(`Data Types`)를 참조해 실제 런타임 메모리 객체(`Data Objects`: Work Area, Internal Table)를 생성하고, 내부 메모리에서의 보관·가공 협력과 디버깅 흐름을 정리한 문서입니다. |
+| **[04.Open SQL.md](./maps/04.Open%20SQL.md)** | **DB 접근 계층 (Open SQL).** ABAP 프로그램의 데이터 요청이 `Database Interface`와 `Table Buffer`를 거쳐 DB와 협력하고 프로그램 메모리(WA/ITAB)로 적재되는 파이프라인을 정리한 문서입니다. |
+| **[mentoring/first-week/problem.md](./mentoring/first-week/problem.md)** | **개념 검증 및 실습 문제.** 맵으로 정리한 계층·참조·메모리 동작을 실제 코드와 시나리오에 적용해 보며, '안다는 착각'과 오개념을 점검하기 위한 문서입니다. |
 | **[GUIDELINES.md](./GUIDELINES.md)** | **지식 맵 작성·확장 원칙 (SSOT).** 새로운 개념을 지도에 추가하거나 리팩터링할 때 계층과 관계가 꼬이지 않도록 유지하는 설계 기준 문서입니다. |
 
 ## 활용 방식
@@ -64,15 +64,16 @@ npm run docs:preview
 
 ## 문서 추가 및 구조
 
-루트의 기존 Markdown 파일이 단일 원본입니다. 웹용 학습 문서 복사본을 만들지 않습니다. 웹 홈은 맵별 소개를 담은 `index.md`이며, README와 GUIDELINES는 웹 빌드에서 제외됩니다. 맵과 퀴즈·해설은 원래 경로의 `.html` 페이지가 됩니다. 공백은 공유 URL에서 `%20`으로 표기합니다.
+`maps/`와 `mentoring/first-week/`의 Markdown 파일이 단일 원본입니다. 웹용 학습 문서 복사본을 만들지 않습니다. 웹 홈은 맵별 소개를 담은 `index.md`이며, README와 GUIDELINES는 웹 빌드에서 제외됩니다. 소스 디렉터리를 정리해도 기존 공유 링크가 깨지지 않도록 VitePress `rewrites`로 공개 URL은 유지합니다. 맵은 기존 루트 URL, 1주차 자료는 기존 `fisrt%20week/` URL로 열립니다. 로컬·GitHub Markdown 링크는 실제 새 소스 경로를 사용합니다.
 
-1. 기존 위치 또는 원하는 하위 폴더에 `.md` 문서를 추가합니다. Mermaid는 기존처럼 `mermaid` 코드 블록으로 작성합니다. 작성 원칙은 [GUIDELINES.md](./GUIDELINES.md)를 따릅니다.
-2. 지도를 사이드바에 추가하려면 `.vitepress/maps.mjs`에 `file`, `title`, `description`을 추가합니다. 파일명과 경로는 실제 Markdown과 일치시킵니다. 일반 문서는 `.vitepress/config.mjs`의 사이드바에 추가합니다.
+1. 맵은 `maps/`, 멘토링 자료는 `mentoring/`의 주차별 폴더에 `.md` 문서를 추가합니다. Mermaid는 기존처럼 `mermaid` 코드 블록으로 작성합니다. 작성 원칙은 [GUIDELINES.md](./GUIDELINES.md)를 따릅니다.
+2. 지도를 사이드바에 추가하려면 `.vitepress/maps.mjs`에 `file`, `title`, `description`을 추가합니다. 파일명과 경로는 실제 Markdown과 일치시킵니다. 배열 순서대로 사이드바에 `01.`, `02.` 형식의 번호가 자동으로 붙습니다. 일반 문서는 `.vitepress/config.mjs`의 사이드바에 추가합니다.
 3. `npm run docs:build`로 링크와 빌드를 확인하고 로컬 미리보기에서 다이어그램을 확인합니다.
 
 | 위치 | 역할 |
 | :--- | :--- |
-| 루트 및 기존 하위 폴더의 `.md` | Obsidian·IDE·GitHub·웹에서 공유하는 학습 원본 |
+| `maps/*.md` | 맵 4개의 학습 원본 |
+| `mentoring/first-week/*.md` | 멘토링 1주차 퀴즈·정답 및 해설 원본 |
 | `.vitepress/config.mjs`, `maps.mjs` | 사이트 및 탐색 설정 |
 | `index.md` | 맵별 소개와 퀴즈·해설로 연결하는 웹 홈 |
 | `.vitepress/theme/` | 넓은 문서 화면 및 뷰어 스타일 |
