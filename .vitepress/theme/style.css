@@ -27,6 +27,38 @@
   font-size: 13px;
 }
 
+.Layout .VPSidebar {
+  padding-bottom: max(24px, env(safe-area-inset-bottom));
+}
+
+.VPSidebar .nav {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 56px);
+  min-height: calc(100dvh - 56px);
+}
+
+.site-owner {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid var(--vp-c-divider);
+  color: var(--vp-c-text-2);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.site-owner a {
+  text-underline-offset: 3px;
+}
+
+.site-owner a:hover {
+  color: var(--vp-c-brand-1);
+}
+
 .vp-doc .mermaid {
   margin: 0;
   background: var(--vp-c-bg);
@@ -166,6 +198,11 @@ dialog.mermaid-view-overlay {
 }
 
 @media (min-width: 960px) {
+  .VPSidebar .nav {
+    min-height: calc(100vh - var(--vp-nav-height) - 24px);
+    min-height: calc(100dvh - var(--vp-nav-height) - 24px);
+  }
+
   .knowledge-map .VPDoc:not(.has-aside) .content {
     max-width: none;
   }
