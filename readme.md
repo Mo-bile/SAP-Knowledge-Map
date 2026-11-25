@@ -64,7 +64,7 @@ npm run docs:preview
 
 ## 문서 추가 및 구조
 
-루트의 기존 Markdown 파일이 단일 원본입니다. 웹용 문서 복사본을 만들지 않습니다. README는 웹 홈으로 연결되며, 나머지 Markdown도 원래 경로의 `.html` 페이지가 됩니다. 공백은 공유 URL에서 `%20`으로 표기합니다.
+루트의 기존 Markdown 파일이 단일 원본입니다. 웹용 학습 문서 복사본을 만들지 않습니다. 웹 홈은 맵별 소개를 담은 `index.md`이며, README와 GUIDELINES는 웹 빌드에서 제외됩니다. 맵과 퀴즈·해설은 원래 경로의 `.html` 페이지가 됩니다. 공백은 공유 URL에서 `%20`으로 표기합니다.
 
 1. 기존 위치 또는 원하는 하위 폴더에 `.md` 문서를 추가합니다. Mermaid는 기존처럼 `mermaid` 코드 블록으로 작성합니다. 작성 원칙은 [GUIDELINES.md](./GUIDELINES.md)를 따릅니다.
 2. 지도를 사이드바에 추가하려면 `.vitepress/maps.mjs`에 `file`, `title`, `description`을 추가합니다. 파일명과 경로는 실제 Markdown과 일치시킵니다. 일반 문서는 `.vitepress/config.mjs`의 사이드바에 추가합니다.
@@ -74,11 +74,12 @@ npm run docs:preview
 | :--- | :--- |
 | 루트 및 기존 하위 폴더의 `.md` | Obsidian·IDE·GitHub·웹에서 공유하는 학습 원본 |
 | `.vitepress/config.mjs`, `maps.mjs` | 사이트 및 탐색 설정 |
+| `index.md` | 맵별 소개와 퀴즈·해설로 연결하는 웹 홈 |
 | `.vitepress/theme/` | 넓은 문서 화면 및 뷰어 스타일 |
 | `.vitepress/tests/`, `playwright.config.mjs` | 원본 지도 렌더링 및 조작 회귀 테스트 |
 | `.github/workflows/pages.yml` | GitHub Pages 자동 빌드·배포 |
 
-루트의 학습 문서는 사이드바 등록 여부와 관계없이 공개 정적 페이지로 빌드됩니다. 비공개 메모는 이 저장소에 추가하지 않습니다. Obsidian에서 웹 설정 폴더가 불필요하면 `.vitepress`와 `node_modules`를 제외 목록에 추가할 수 있습니다.
+웹에는 홈, 맵 4개, 멘토링 1주차 퀴즈, 정답 및 해설을 제공합니다. 사이드바는 `학습 자료 → 멘토링 1주차 → 퀴즈 / 정답 및 해설` 순으로 묶습니다. README와 GUIDELINES는 `.vitepress/config.mjs`의 `srcExclude`로 제외하여 직접 URL로도 제공하지 않습니다. 이 설정은 GitHub Pages에 대한 제외이며, 공개 GitHub 저장소의 원문 접근 권한을 변경하지는 않습니다. 추가 Markdown은 사이드바 등록 여부와 관계없이 빌드될 수 있으므로 웹에 공개하지 않을 문서는 `srcExclude`에 추가합니다. Obsidian에서 웹 설정 폴더가 불필요하면 `.vitepress`와 `node_modules`를 제외 목록에 추가할 수 있습니다.
 
 ### Mermaid 뷰어 선택
 

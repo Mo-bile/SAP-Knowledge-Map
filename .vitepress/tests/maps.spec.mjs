@@ -129,7 +129,7 @@ test('home links, sidebar navigation and dark theme keep graphs usable', async (
   })
   await page.goto('./')
   await expect(page.locator('main')).toContainText('SAP Knowledge Map')
-  await page.locator('main').getByRole('link', { name: '03.ABAP program.md', exact: true }).click()
+  await page.locator('main').getByRole('link', { name: 'ABAP Program Map', exact: true }).click()
   await expect(page).toHaveURL(/03\.ABAP%20program\.html$/)
   await expect(page.locator('.mermaid svg')).toBeVisible()
   const lightFill = await page.locator('.mermaid svg .node rect').first().evaluate(node => getComputedStyle(node).fill)

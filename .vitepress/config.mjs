@@ -14,8 +14,7 @@ const config = withMermaid(defineConfig({
   }]],
   // GitHub Pages serves real .html files without a rewrite server.
   cleanUrls: false,
-  srcExclude: ['node_modules/**', 'test-results/**', 'playwright-report/**', '**/AGENTS.md'],
-  rewrites: { 'readme.md': 'index.md' },
+  srcExclude: ['node_modules/**', 'test-results/**', 'playwright-report/**', '**/AGENTS.md', 'readme.md', 'README.md', 'GUIDELINES.md'],
   markdown: { languages: ['abap'] },
   mermaid: {
     securityLevel: 'strict',
@@ -33,6 +32,11 @@ const config = withMermaid(defineConfig({
     downloadPng: false
   },
   transformPageData(pageData) {
+    const learningTitle = {
+      'fisrt week/problem.md': '멘토링 1주차 퀴즈',
+      'fisrt week/solution.md': '정답 및 해설'
+    }[pageData.relativePath]
+    if (learningTitle) pageData.title = learningTitle
     const map = maps.find(map => map.file === pageData.relativePath)
     if (map) {
       pageData.title = map.title
@@ -49,9 +53,10 @@ const config = withMermaid(defineConfig({
     sidebar: [
       { text: 'Knowledge Maps', items: maps.map(map => ({ text: map.title, link: `/${map.file.replace(/\.md$/, '')}` })) },
       { text: '학습 자료', items: [
-        { text: '작성 원칙', link: '/GUIDELINES' },
-        { text: '실습 문제', link: '/fisrt week/problem' },
-        { text: '정답 및 해설', link: '/fisrt week/solution' }
+        { text: '멘토링 1주차', collapsed: false, items: [
+          { text: '퀴즈', link: '/fisrt week/problem' },
+          { text: '정답 및 해설', link: '/fisrt week/solution' }
+        ] }
       ] }
     ],
     socialLinks: [{ icon: 'github', link: 'https://github.com/Mo-bile/SAP-Knowledge-Map' }],
